@@ -346,7 +346,7 @@
     });
   }
 
-  function defaultRender(container: JQuery, team: string, score: any, state: EntryState): void {
+  function defaultRender(container: JQuery, team: string, score: any, state: EntryState, bracketData: any): void {
     switch (state) {
       case 'empty-bye':
         container.append('BYE');
@@ -886,7 +886,7 @@
   function teamElement(roundNumber: number, match: MatchResult, team: TeamBlock,
                        opponent: TeamBlock, isReady: boolean,
                        isFirstBracket: boolean, opts: Options, resultId: ResultId,
-                       topCon: JQuery, renderAll: (boolean) => void) {
+                       topCon: JQuery, renderAll: (boolean) => void, matchUserData: any) {
     const resultIdAttribute = team.name.isEmpty() || opponent.name.isEmpty() ? '' : `data-resultid="result-${resultId.getNext()}"`;
     const sEl = $(`<div class="score" style="width: ${opts.scoreWidth}px;" ${resultIdAttribute}></div>`);
     const score = (team.name.isEmpty() || opponent.name.isEmpty() || !isReady)
@@ -1165,10 +1165,10 @@
 
       this.teamCon.append(teamElement(this.round.roundNumber, this.match, this.match.a,
           this.match.b, isReady, this.isFirstBracket, this.opts, this.resultId,
-          this.topCon, this.renderAll));
+          this.topCon, this.renderAll, this.matchUserData));
       this.teamCon.append(teamElement(this.round.roundNumber, this.match, this.match.b,
           this.match.a, isReady, this.isFirstBracket, this.opts, this.resultId,
-          this.topCon, this.renderAll));
+          this.topCon, this.renderAll, this.matchUserData));
 
       this.matchCon.appendTo(this.round.el);
       this.matchCon.append(this.teamCon);
